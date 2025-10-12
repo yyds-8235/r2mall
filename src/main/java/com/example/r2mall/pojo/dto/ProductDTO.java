@@ -17,6 +17,10 @@ public class ProductDTO {
     @Schema(description = "商品名称")
     private String name;
 
+    @NotBlank(message = "商品类别不能为空")
+    @Schema(description = "商品类别（如：蔬菜水果、粮油调味、肉蛋禽类等）")
+    private String category;
+
     @NotBlank(message = "商品图片不能为空")
     @Schema(description = "商品主图片URL")
     private String image;

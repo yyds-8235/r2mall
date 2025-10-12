@@ -32,7 +32,7 @@ public interface ProductService {
     /**
      * 用户浏览/搜索商品（分页、搜索、排序）
      */
-    Page<Product> searchProducts(String keyword, String sortBy, Integer page, Integer size);
+    Page<Product> searchProducts(String keyword, String sortBy, String sortOrder, String category, Integer page, Integer size);
 
     /**
      * 获取商品详情

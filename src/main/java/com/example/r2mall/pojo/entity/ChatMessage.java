@@ -7,6 +7,11 @@ import lombok.Data;
  */
 @Data
 public class ChatMessage {
+
+    /**
+     * 消息ID
+     */
+    private Long id;
     
     /**
      * 发送者ID

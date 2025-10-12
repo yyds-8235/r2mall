@@ -46,7 +46,7 @@ public class OrderInfo implements Serializable {
     private String shippingAddress;
 
     /**
-     * 订单状态 (0: 待支付, 1: 已支付/待发货)
+     * 订单状态 (0: 待支付, 1: 已支付/待发货, 2: 已发货/配送中)
      */
     @TableField("status")
     private Integer status;

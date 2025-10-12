@@ -23,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product();
         product.setMerchantId(merchantId);
         product.setName(dto.getName());
+        product.setCategory(dto.getCategory());
         product.setImage(dto.getImage());
         product.setPrice(dto.getPrice());
         product.setStock(dto.getStock());
@@ -46,6 +47,9 @@ public class ProductServiceImpl implements ProductService {
         product.setId(productId);
         if (dto.getName() != null) {
             product.setName(dto.getName());
+        }
+        if (dto.getCategory() != null) {
+            product.setCategory(dto.getCategory());
         }
         if (dto.getImage() != null) {
             product.setImage(dto.getImage());
@@ -92,27 +96,34 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> searchProducts(String keyword, String sortBy, Integer page, Integer size) {
+    public Page<Product> searchProducts(String keyword, String sortBy, String sortOrder, String category, Integer page, Integer size) {
         Page<Product> pageParam = new Page<>(page, size);
         LambdaQueryWrapper<Product> wrapper = new LambdaQueryWrapper<>();
-        
+
         // 只查询上架的商品
         wrapper.eq(Product::getStatus, 1);
-        
+
         // 关键词搜索
         if (keyword != null && !keyword.trim().isEmpty()) {
             wrapper.like(Product::getName, keyword);
         }
-        
+
         // 价格排序
-        if ("price_asc".equals(sortBy)) {
-            wrapper.orderByAsc(Product::getPrice);
-        } else if ("price_desc".equals(sortBy)) {
-            wrapper.orderByDesc(Product::getPrice);
+        if ("price".equals(sortBy)) {
+            if ("desc".equals(sortOrder)) {
+                wrapper.orderByDesc(Product::getPrice);
+            } else {
+                wrapper.orderByAsc(Product::getPrice);
+            }
         } else {
+            // 默认按创建时间降序
             wrapper.orderByDesc(Product::getCreateTime);
         }
-        
+        // 分类过滤
+        if (category != null && !category.trim().isEmpty()) {
+            wrapper.eq(Product::getCategory, category);
+        }
+
         return productMapper.selectPage(pageParam, wrapper);
     }
 

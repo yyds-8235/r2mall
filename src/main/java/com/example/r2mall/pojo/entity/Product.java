@@ -34,6 +34,12 @@ public class Product implements Serializable {
     private String name;
 
     /**
+     * 商品类别（如：蔬菜水果、粮油调味、肉蛋禽类等）
+     */
+    @TableField("category")
+    private String category;
+
+    /**
      * 商品主图片URL
      */
     @TableField("image")

@@ -36,6 +36,7 @@ CREATE TABLE `product` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '商品编号 (主键ID)',
   `merchant_id` BIGINT UNSIGNED NOT NULL COMMENT '所属商家ID',
   `name` VARCHAR(150) NOT NULL COMMENT '商品名字',
+  `category` VARCHAR(50) NOT NULL COMMENT '商品类别（如：蔬菜水果、粮油调味、肉蛋禽类等）',
   `image` VARCHAR(255) NOT NULL COMMENT '商品主图片URL',
   `price` DECIMAL(10, 2) NOT NULL COMMENT '商品价格',
   `stock` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '库存数量',
@@ -44,7 +45,8 @@ CREATE TABLE `product` (
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上架日期',
   `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '信息最后更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_merchant_id` (`merchant_id`)
+  KEY `idx_merchant_id` (`merchant_id`),
+  KEY `idx_category` (`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品表';
 
 -- 4. 收货地址表
@@ -70,7 +72,7 @@ CREATE TABLE `order_info` (
   `user_id` BIGINT UNSIGNED NOT NULL COMMENT '下单用户ID',
   `total_amount` DECIMAL(10, 2) NOT NULL COMMENT '实付款金额',
   `shipping_address` VARCHAR(255) NOT NULL COMMENT '收货地址（快照）',
-  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '订单状态 (0: 待支付, 1: 已支付/待发货)',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '订单状态 (0: 待支付, 1: 已支付/待发货, 2: 已发货/配送中)',
   `delivery_time` DATETIME COMMENT '预计送达时间',
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '下单时间',
   `payment_time` DATETIME DEFAULT NULL COMMENT '支付时间',
@@ -92,4 +94,18 @@ CREATE TABLE `order_item` (
   PRIMARY KEY (`id`),
   KEY `idx_order_no` (`order_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
+
+-- 7. 聊天消息表
+DROP TABLE IF EXISTS `chat_message`;
+CREATE TABLE `chat_message` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `from_user_id` VARCHAR(50) NOT NULL COMMENT '发送者ID',
+  `to_user_id` VARCHAR(50) NOT NULL COMMENT '接收者ID',
+  `message_type` VARCHAR(20) NOT NULL DEFAULT 'text' COMMENT '消息类型',
+  `content` TEXT NOT NULL COMMENT '消息内容',
+  `timestamp` BIGINT NOT NULL COMMENT '时间戳',
+  PRIMARY KEY (`id`),
+  KEY `idx_from_to` (`from_user_id`, `to_user_id`),
+  KEY `idx_to_from` (`to_user_id`, `from_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='聊天消息表';
 

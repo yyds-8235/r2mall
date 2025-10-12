@@ -25,9 +25,11 @@ public class ProductController {
     public Result<Page<Product>> searchProducts(
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String sortOrder,
+            @RequestParam(required = false) String category,
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
-        Page<Product> result = productService.searchProducts(keyword, sortBy, page, size);
+        Page<Product> result = productService.searchProducts(keyword, sortBy, sortOrder, category, page, size);
         return Result.success(result);
     }
 

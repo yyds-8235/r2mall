@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.r2mall.common.Result;
 import com.example.r2mall.pojo.dto.OrderCreateDTO;
+import com.example.r2mall.pojo.dto.OrderStatusUpdateDTO;
 import com.example.r2mall.pojo.entity.OrderInfo;
 import com.example.r2mall.pojo.vo.OrderDetailVO;
 import com.example.r2mall.service.OrderService;
@@ -65,6 +66,20 @@ public class OrderController {
             Long userId = StpUtil.getLoginIdAsLong();
             OrderDetailVO detail = orderService.getOrderDetail(userId, orderNo);
             return Result.success(detail);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{orderNo}/status")
+    @Operation(summary = "修改订单状态", description = "确认收货")
+    public Result<String> updateOrderStatus(
+            @PathVariable String orderNo,
+            @RequestBody OrderStatusUpdateDTO dto) {
+        try {
+            Long userId = StpUtil.getLoginIdAsLong();
+            orderService.updateOrderStatus(userId, orderNo, dto.getStatus());
+            return Result.success("订单状态更新成功");
         } catch (Exception e) {
             return Result.error(e.getMessage());
         }

@@ -17,23 +17,23 @@ INSERT INTO `merchant` (`merchant_no`, `password`, `shop_name`, `avatar`) VALUES
 ('M003', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iXTVh9Cy', '绿色有机蔬菜', 'https://via.placeholder.com/200');
 
 -- 插入测试商品（商家1的商品）
-INSERT INTO `product` (`merchant_id`, `name`, `image`, `price`, `stock`, `description`, `status`) VALUES
-(1, '有机红富士苹果', 'https://via.placeholder.com/300', 35.90, 100, '来自山东烟台的有机红富士苹果，香甜可口，果肉细腻', 1),
-(1, '新鲜鸡蛋', 'https://via.placeholder.com/300', 25.00, 200, '农家散养土鸡蛋，营养丰富', 1),
-(1, '有机蔬菜礼盒', 'https://via.placeholder.com/300', 68.00, 50, '包含多种时令有机蔬菜，新鲜配送', 1);
+INSERT INTO `product` (`merchant_id`, `name`, `category`, `image`, `price`, `stock`, `description`, `status`) VALUES
+(1, '有机红富士苹果', '蔬菜水果', 'https://via.placeholder.com/300', 35.90, 100, '来自山东烟台的有机红富士苹果，香甜可口，果肉细腻', 1),
+(1, '新鲜鸡蛋', '肉蛋禽类', 'https://via.placeholder.com/300', 25.00, 200, '农家散养土鸡蛋，营养丰富', 1),
+(1, '有机蔬菜礼盒', '蔬菜水果', 'https://via.placeholder.com/300', 68.00, 50, '包含多种时令有机蔬菜，新鲜配送', 1);
 
 -- 插入测试商品（商家2的商品）
-INSERT INTO `product` (`merchant_id`, `name`, `image`, `price`, `stock`, `description`, `status`) VALUES
-(2, '野生核桃', 'https://via.placeholder.com/300', 88.00, 80, '大别山野生核桃，营养价值高', 1),
-(2, '土蜂蜜', 'https://via.placeholder.com/300', 128.00, 30, '纯正土蜂蜜，无添加', 1),
-(2, '山楂干', 'https://via.placeholder.com/300', 32.00, 120, '天然晾晒，酸甜可口', 1);
+INSERT INTO `product` (`merchant_id`, `name`, `category`, `image`, `price`, `stock`, `description`, `status`) VALUES
+(2, '野生核桃', '休闲零食', 'https://via.placeholder.com/300', 88.00, 80, '大别山野生核桃，营养价值高', 1),
+(2, '土蜂蜜', '粮油调味', 'https://via.placeholder.com/300', 128.00, 30, '纯正土蜂蜜，无添加', 1),
+(2, '山楂干', '休闲零食', 'https://via.placeholder.com/300', 32.00, 120, '天然晾晒，酸甜可口', 1);
 
 -- 插入测试商品（商家3的商品）
-INSERT INTO `product` (`merchant_id`, `name`, `image`, `price`, `stock`, `description`, `status`) VALUES
-(3, '有机西红柿', 'https://via.placeholder.com/300', 15.90, 150, '有机种植，无农药残留', 1),
-(3, '有机黄瓜', 'https://via.placeholder.com/300', 12.50, 200, '脆嫩多汁，口感清爽', 1),
-(3, '有机菠菜', 'https://via.placeholder.com/300', 8.90, 100, '富含铁元素，营养丰富', 1),
-(3, '有机生菜', 'https://via.placeholder.com/300', 9.90, 80, '适合做沙拉，新鲜脆嫩', 0);
+INSERT INTO `product` (`merchant_id`, `name`, `category`, `image`, `price`, `stock`, `description`, `status`) VALUES
+(3, '有机西红柿', '蔬菜水果', 'https://via.placeholder.com/300', 15.90, 150, '有机种植，无农药残留', 1),
+(3, '有机黄瓜', '蔬菜水果', 'https://via.placeholder.com/300', 12.50, 200, '脆嫩多汁，口感清爽', 1),
+(3, '有机菠菜', '蔬菜水果', 'https://via.placeholder.com/300', 8.90, 100, '富含铁元素，营养丰富', 1),
+(3, '有机生菜', '蔬菜水果', 'https://via.placeholder.com/300', 9.90, 80, '适合做沙拉，新鲜脆嫩', 0);
 
 -- 插入测试收货地址（用户1的地址）
 INSERT INTO `shipping_address` (`user_id`, `recipient_name`, `phone`, `address`, `is_default`) VALUES
@@ -67,7 +67,7 @@ SELECT '=== 商家列表 ===' AS '';
 SELECT id, merchant_no, shop_name, create_time FROM merchant;
 
 SELECT '=== 商品列表 ===' AS '';
-SELECT p.id, p.name, p.price, p.stock, p.status, m.shop_name 
+SELECT p.id, p.name, p.category, p.price, p.stock, p.status, m.shop_name 
 FROM product p 
 LEFT JOIN merchant m ON p.merchant_id = m.id
 ORDER BY p.id;
