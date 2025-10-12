@@ -46,7 +46,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
                 // Sa-Token认证拦截器
                 registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
-                                .addPathPatterns("/**")
+                                .addPathPatterns("/api/**") // 需要登录认证的路径
                                 .excludePathPatterns(
                                                 "/api/auth/login", // 登录接口
                                                 "/api/auth/user/register", // 用户注册
@@ -58,7 +58,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                                 "/swagger-ui.html", // Swagger UI
                                                 "/doc.html", // Knife4j文档
                                                 "/error", // 错误页面
-                                                "/favicon.ico" // 网站图标
+                                                "/favicon.ico", // 网站图标
+                                                "/index.html", // 首页
+                                                "/", // 首页
+                                                "/static/**" // 静态资源
                                 )
                                 .order(3);
         }
