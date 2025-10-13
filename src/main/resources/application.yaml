@@ -58,7 +58,9 @@ mybatis-plus:
 # Sa-Token 配置
 sa-token:
   # token 名称（同时也是 cookie 名称）
-  token-name: satoken
+  token-name: Authorization
+  # 是否从请求 header 里读取 Token，必须为 true
+  is-read-header: true
   # token 有效期，单位s 默认30天, -1代表永不过期 这里设置一天
   timeout: 86400
   # token 临时有效期 (指定时间内无操作就视为 token 过期) 单位: 秒
