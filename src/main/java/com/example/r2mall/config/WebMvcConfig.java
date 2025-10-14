@@ -6,10 +6,12 @@ import com.example.r2mall.interceptor.CorsInterceptor;
 import com.example.r2mall.interceptor.RequestLoggingInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.resource.PathResourceResolver;
+
+import java.io.IOException;
 
 /**
  * Web MVC配置类
@@ -88,8 +90,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 registry.addResourceHandler("/swagger-ui/**")
                                 .addResourceLocations("classpath:/META-INF/resources/webjars/swagger-ui/");
 
-                // 其他静态资源
+                // 静态资源处理
                 registry.addResourceHandler("/static/**")
-                                .addResourceLocations("classpath:/static/");
+                        .addResourceLocations("classpath:/static/");
+
+                // 处理前端路由，所有请求都返回 index.html
+                registry.addResourceHandler("/**")
+                        .addResourceLocations("classpath:/static/")
+                        .resourceChain(true)
+                        .addResolver(new PathResourceResolver() {
+                                @Override
+                                protected Resource getResource(String resourcePath, Resource location) throws IOException {
+                                        Resource requestedResource = location.createRelative(resourcePath);
+                                        return requestedResource.exists() && requestedResource.isReadable()
+                                                ? requestedResource
+                                                : new ClassPathResource("/static/index.html");
+                                }
+                        });
         }
 }
