@@ -89,7 +89,7 @@ oss:
   qiniu:
     accessKey: 1An4FtjWnwe1DTgVdw8q7ioV_Sv8ywBPUDFolOt1
     secretKey: RDKriCRjU0cG8XGJ4SCWw5-e-zO2JblN9Pz6uXhg
-    bucket: r2mall
+    bucket: khy
     #// localFilePath: /path/to/local/file 文件下载到本地磁盘位置，可不配置（本文没有配置）
     #// domainOfBucket 中的域名为用户 bucket 绑定的域名 测试域名，只有30天有效期
-    domainOfBucket: t3xyra4t9.hn-bkt.clouddn.com
+    domainOfBucket: khy.hhhwww.top
