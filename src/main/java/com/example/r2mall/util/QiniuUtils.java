@@ -27,7 +27,7 @@ public class QiniuUtils {
     private String bucket;
     private String localFilePath;
     private String domainOfBucket;
-    private static final String HTTP_PREFIX = "http://";
+    private static final String HTTP_PREFIX = "https://";
 
     /**
      * 文件上传
