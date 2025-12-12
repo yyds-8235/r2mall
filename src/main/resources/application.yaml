@@ -93,3 +93,17 @@ oss:
     #// localFilePath: /path/to/local/file 文件下载到本地磁盘位置，可不配置（本文没有配置）
     #// domainOfBucket 中的域名为用户 bucket 绑定的域名 测试域名，只有30天有效期
     domainOfBucket: khy.hhhwww.top
+
+# Minio 配置
+minio:
+  endpoint: http://111.228.5.125:9000  # MinIO 服务地址
+  access-key: admin                    # 账号
+  secret-key: strongpassword123        # 密码
+  bucket-name: test                    # 默认存储桶名称
+
+# RustFS 配置
+rustfs:
+  endpoint: http://111.228.5.125:9000  # RustFS 服务地址
+  access-key: admin
+  secret-key: strongpassword
+  bucket-name: test
